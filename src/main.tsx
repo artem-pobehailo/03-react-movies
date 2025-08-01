@@ -1,4 +1,3 @@
-import React from "react";
 // import toast, { Toaster } from "react-hot-toast";
 import App from "./components/App/App";
 import { createRoot } from "react-dom/client";
