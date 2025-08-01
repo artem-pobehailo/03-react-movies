@@ -11,25 +11,32 @@ interface MovieModalProps {
 export default function MovieModal({ movie, onClose }: MovieModalProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-    const handleClickOutside = (event: MouseEvent) => {
-      if ((event.target as Element).classList.contains(css.backdrop)) onClose();
+      if (event.key === "Escape") {
+        onClose();
+      }
     };
 
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("click", handleClickOutside);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("click", handleClickOutside);
       document.body.style.overflow = "";
     };
   }, [onClose]);
 
+  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
   return createPortal(
-    <div className={css.backdrop} role="dialog" aria-modal="true">
+    <div
+      className={css.backdrop}
+      role="dialog"
+      aria-modal="true"
+      onClick={handleBackdropClick}
+    >
       <div className={css.modal}>
         <button
           className={css.closeButton}
